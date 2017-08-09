@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MediaPortal.GUI.Library;
 using MediaPortal.Player;
 using PandoraMusicBox.Engine.Data;
-using System.Diagnostics;
 using NLog;
 using MediaPortal.Dialogs;
 using PandoraMusicBox.Engine;
@@ -392,6 +389,7 @@ namespace PandoraMusicBox.MediaPortalPlugin.GUI
 				Core.Initialize();
 
 				g_Player.PlayBackEnded += new g_Player.EndedHandler(OnPlayBackEnded);
+				BassMusicPlayer.Player.InternetStreamSongChanged += OnInternetStreamSongChanged;
 				initialized = true;
 				return true;
 			}
@@ -567,6 +565,11 @@ namespace PandoraMusicBox.MediaPortalPlugin.GUI
 			{
 				handlingEvent = false;
 			}
+		}
+
+		private void OnInternetStreamSongChanged(object sender)
+		{
+			OnPlayBackEnded(g_Player.MediaType.Music, ((IPlayer)sender).CurrentFile);
 		}
 
 		public void ShowMessage(string heading, string line1, string line2, string line3, string line4)
