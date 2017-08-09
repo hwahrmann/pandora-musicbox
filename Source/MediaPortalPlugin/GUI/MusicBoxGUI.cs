@@ -324,28 +324,34 @@ namespace PandoraMusicBox.MediaPortalPlugin.GUI
 					SetProperty("#PandoraMusicBox.History" + i + ".Rating", "");
 				}
 
-				int iHistory = 1;
-				foreach (var song in Core.MusicBox.PreviousSongs)
+				if (Core.MusicBox.PreviousSongs != null)
 				{
-					SetProperty("#PandoraMusicBox.History" + iHistory + ".Artist", song.Artist);
-					SetProperty("#PandoraMusicBox.History" + iHistory + ".Title", song.Title);
-					SetProperty("#PandoraMusicBox.History" + iHistory + ".Album", song.Album);
-					SetProperty("#PandoraMusicBox.History" + iHistory + ".ArtworkURL", song.AlbumArtLargeURL);
-					SetProperty("#PandoraMusicBox.History" + iHistory + ".IsAdvertisement", song.IsAdvertisement.ToString());
-					if (song.TemporarilyBanned)
-						SetProperty("#PandoraMusicBox.History" + iHistory + ".Rating", "TemporarilyBanned");
-					else
-						SetProperty("#PandoraMusicBox.History" + iHistory + ".Rating", song.Rating.ToString());
-					iHistory++;
+					int iHistory = 1;
+					foreach (var song in Core.MusicBox.PreviousSongs)
+					{
+						SetProperty("#PandoraMusicBox.History" + iHistory + ".Artist", song.Artist);
+						SetProperty("#PandoraMusicBox.History" + iHistory + ".Title", song.Title);
+						SetProperty("#PandoraMusicBox.History" + iHistory + ".Album", song.Album);
+						SetProperty("#PandoraMusicBox.History" + iHistory + ".ArtworkURL", song.AlbumArtLargeURL);
+						SetProperty("#PandoraMusicBox.History" + iHistory + ".IsAdvertisement", song.IsAdvertisement.ToString());
+						if (song.TemporarilyBanned)
+							SetProperty("#PandoraMusicBox.History" + iHistory + ".Rating", "TemporarilyBanned");
+						else
+							SetProperty("#PandoraMusicBox.History" + iHistory + ".Rating", song.Rating.ToString());
+						iHistory++;
+					}
 				}
 
 				SetProperty("#PandoraMusicBox.CurrentStation.Name", Core.MusicBox.CurrentStation == null ? "" : Core.MusicBox.CurrentStation.Name);
 
 				btnCurrentSong.Visible = currentSong != null;
-				btnHistory1Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 1);
-				btnHistory2Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 2);
-				btnHistory3Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 3);
-				btnHistory4Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 4);
+				if (Core.MusicBox.PreviousSongs != null)
+				{
+					btnHistory1Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 1);
+					btnHistory2Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 2);
+					btnHistory3Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 3);
+					btnHistory4Song.Visible = (Core.MusicBox.PreviousSongs.Count >= 4);
+				}
 			}
 			catch (Exception ex) { GracefullyFail(ex); }
 		}
