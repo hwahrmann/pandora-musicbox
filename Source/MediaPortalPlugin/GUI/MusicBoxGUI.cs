@@ -559,7 +559,7 @@ namespace PandoraMusicBox.MediaPortalPlugin.GUI
 				{
 					logger.Debug("Playback ended for current Pandora song.");
 					setWorkingAnimationStatus(true);
-					PlayNextTrack();
+					PlayNextTrack(true);
 					setWorkingAnimationStatus(false);
 				}
 			}
